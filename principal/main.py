@@ -23,3 +23,15 @@ while salir == False:
      #turno cpu
      #semilla aleatoria
      #disparo(lado1,lado2)
+
+
+# nombre usuario
+# crear tablero --> 10x10
+# colocar barcos --> aleatoria
+#     hay que tener en cuenta los limites del tablero
+#     no se pueden solapar barcos
+# quien dispara primero? nosotros
+# disparo -->
+#     Agua --> cambio turno
+#     Tocado
+#     Tocado y hundido
