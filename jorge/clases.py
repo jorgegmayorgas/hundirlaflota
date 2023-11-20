@@ -8,10 +8,10 @@ class tablero:
         self.longitud_lado_2= longitud_lado_2
         #self.posiciones = posiciones
     
-    def rellena (self,caracter="x"):
-        tablero_rellenado = np.array(shape=(longitud_lado_1=10,longitud_lado_2),dtype="str")
+    def rellena (self,caracter="0"):
+        tablero_rellenado = np.array(shape=(self.longitud_lado_1,self.longitud_lado_2))
         tablero_rellenado = np.fill(tablero_rellenado,caracter)
-        return tablero_rellenado    
+        return tablero_rellenado
 
     def muestra (self):
         print(self)
@@ -24,6 +24,7 @@ class barco:
         self.coordenada_y = coordenada_y
         self.posiciones = posiciones
         self.caracter = caracter
+
 
 
     

@@ -8,7 +8,7 @@ import variables as constantes
 #func.hola()
 salir = False
 # crear tablero --> 10x10
-# colocar barcos --> fija primero
+# colocar barcos --> posicion fija primero
 #     hay que tener en cuenta los limites del tablero
 #     no se pueden solapar barcos
 while salir == False:
@@ -27,13 +27,26 @@ while salir == False:
      #disparo(lado1,lado2)
 
 
+
 # nombre usuario
 
-# disparo -->
+# disparo usuario-->
+# agua = False
+# while agua == False
+#     Agua --> cambio turno
+
+#     Tocado
+          #Cuantas posiciones quedan
+               #posiciones = 0 o hundido = posiciones * barco(n)
+#                 #si hundido cuenta +1 o resta -1 al total de barcos       
+#imprime tableros
+
+# disparo cpu -->
 # agua = False
 # while agua == False
 #     Agua --> cambio turno
 #     Tocado
           #Cuantas posiciones quedan
                #posiciones = 0 o hundido = posiciones * barco(n)
-#     
+#                 #si hundido cuenta +1 o resta -1 al total de barcos       
+#imprime tableros
