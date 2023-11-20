@@ -24,7 +24,11 @@ class barco:
         self.coordenada_y = coordenada_y
         self.posiciones = posiciones
         self.caracter = caracter
-
-
-
     
+    def tocado_hundido(self):
+        hundido = False
+        if self.posiciones>0:
+            self.posiciones -=1
+        if self.posiciones==0:
+            hundido = True
+        return hundido

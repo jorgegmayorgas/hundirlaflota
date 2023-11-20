@@ -25,28 +25,26 @@ while salir == False:
      #turno cpu
      #semilla aleatoria
      #disparo(lado1,lado2)
-
-
-
 # nombre usuario
 
 # disparo usuario-->
 # agua = False
 # while agua == False
 #     Agua --> cambio turno
-
 #     Tocado
           #Cuantas posiciones quedan
                #posiciones = 0 o hundido = posiciones * barco(n)
-#                 #si hundido cuenta +1 o resta -1 al total de barcos       
+#                 #si hundido cuenta +1 o resta -1 al total de barcos
+                  #cuenta total de barcos
+#        
 #imprime tableros
-
-# disparo cpu -->
-# agua = False
-# while agua == False
-#     Agua --> cambio turno
-#     Tocado
-          #Cuantas posiciones quedan
-               #posiciones = 0 o hundido = posiciones * barco(n)
-#                 #si hundido cuenta +1 o resta -1 al total de barcos       
-#imprime tableros
+##cambio turno
+   # disparo cpu -->
+   # agua = False
+   # while agua == False
+   #     Agua --> cambio turno
+   #     Tocado
+            #Cuantas posiciones quedan
+                  #posiciones = 0 o hundido = posiciones * barco(n)
+   #                 #si hundido cuenta +1 o resta -1 al total de barcos       
+   #imprime tableros

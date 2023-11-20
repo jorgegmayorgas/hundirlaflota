@@ -29,7 +29,7 @@ def barco(tablero,tamanyo):
     ejey = rd.randrange(limite_ejey-1)
     print(ejex,":",ejey)
 
-def impacto (self,coordenada_x=0, coordenada_y=0,posiciones):
+def impacto (self,coordenada_x=0, coordenada_y=0,posiciones=0):
         self.coordenada_x = coordenada_x
         self.coordenada_y = coordenada_y
         self.posiciones = posiciones
