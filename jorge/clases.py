@@ -3,19 +3,21 @@ import pandas as pd
 
 class tablero:
     #Atributos y métodos, las cosas de la clase
-    def __init__(self, longitud_lado_1=10 , longitud_lado_2=10):
+    def __init__(self, longitud_lado_1=10 , longitud_lado_2=10,id=""):
         self.longitud_lado_1 = longitud_lado_1
         self.longitud_lado_2= longitud_lado_2
+        self.id = id
         #self.posiciones = posiciones
     
-    def rellena (self,caracter="0"):
-        tablero_rellenado = np.array(shape=(self.longitud_lado_1,self.longitud_lado_2))
-        tablero_rellenado = np.fill(tablero_rellenado,caracter)
+    def rellena (self,caracter=" "):
+        #tablero_rellenado = np.array((10,10))
+        tablero_rellenado = np.full((self.longitud_lado_1,self.longitud_lado_2),caracter)
         return tablero_rellenado
 
     def muestra (self):
         print(self)
     
+
 class barco:
      #posiciones = 4
 

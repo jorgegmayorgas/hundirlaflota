@@ -7,6 +7,12 @@ import variables as constantes
 #print(constantes.lado_1)
 #func.hola()
 salir = False
+tablero1 = clases.tablero(10,10,"jugador")
+print(type(tablero1))
+tablero1.rellena("-")
+print(tablero1)
+
+
 # crear tablero --> 10x10
 # colocar barcos --> posicion fija primero
 #     hay que tener en cuenta los limites del tablero
@@ -27,7 +33,7 @@ while salir == False:
      #disparo(lado1,lado2)
 # nombre usuario
 
-# disparo usuario-->
+# disparo usuario--> disparo(lado_1,lado_2,tablero_jugador)
 # agua = False
 # while agua == False
 #     Agua --> cambio turno
@@ -39,7 +45,7 @@ while salir == False:
 #        
 #imprime tableros
 ##cambio turno
-   # disparo cpu -->
+   # disparo cpu -->-> disparo(lado_1,lado_2,tablero_cpu)
    # agua = False
    # while agua == False
    #     Agua --> cambio turno

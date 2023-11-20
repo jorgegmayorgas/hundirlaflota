@@ -1,10 +1,13 @@
 def hola():
     print("Hola")
 
-def disparo(valor,tablero):
+def disparo(coordenada,tablero,barco):
+    #buscar en tablero
+    valor=tablero[coordenada]
     if valor.upper() == "O":
-        valor = "X"
+        valor = "X"#valor de barco el que corresponda
         #print(valor)
+        hundido = barco.tocado_hundido()
         print("Acierto") #definir tocado hundido
         return valor
     else:
@@ -33,3 +36,8 @@ def impacto (self,coordenada_x=0, coordenada_y=0,posiciones=0):
         self.coordenada_x = coordenada_x
         self.coordenada_y = coordenada_y
         self.posiciones = posiciones
+
+def arregla_barcos(tablero):
+    tablero[tablero == "X"] = "O"
+    #tablero.where(tablero == "X","O", tablero)
+    return tablero
