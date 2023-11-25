@@ -1,56 +1,51 @@
-import clases as clases
+from tablero import Tablero
 import funciones as func
-import numpy as np
-import time as tm
-import variables as constantes
-
-#print(constantes.lado_1)
-#func.hola()
-salir = False
-tablero1 = clases.tablero(10,10,"jugador")
-print(type(tablero1))
-tablero1.rellena("-")
-print(tablero1)
+import random
 
 
-# crear tablero --> 10x10
-# colocar barcos --> posicion fija primero
-#     hay que tener en cuenta los limites del tablero
-#     no se pueden solapar barcos
-while salir == False:
-     lado_1=input("Diga primera coordenada o salir:")
-     if lado_1.lower() == "salir":
-        salir=True
-        continue
-     else:
-        lado_2=input("Diga segunda coordenada o salir:")
-        if lado_2.lower() == "salir":
-           salir=True
-     #tm.sleep(5)
-     #disparo(lado1,lado2)
-     #turno cpu
-     #semilla aleatoria
-     #disparo(lado1,lado2)
-# nombre usuario
 
-# disparo usuario--> disparo(lado_1,lado_2,tablero_jugador)
-# agua = False
-# while agua == False
-#     Agua --> cambio turno
-#     Tocado
-          #Cuantas posiciones quedan
-               #posiciones = 0 o hundido = posiciones * barco(n)
-#                 #si hundido cuenta +1 o resta -1 al total de barcos
-                  #cuenta total de barcos
-#        
-#imprime tableros
-##cambio turno
-   # disparo cpu -->-> disparo(lado_1,lado_2,tablero_cpu)
-   # agua = False
-   # while agua == False
-   #     Agua --> cambio turno
-   #     Tocado
-            #Cuantas posiciones quedan
-                  #posiciones = 0 o hundido = posiciones * barco(n)
-   #                 #si hundido cuenta +1 o resta -1 al total de barcos       
-   #imprime tableros
+def main():
+    jugador = Tablero(jugador_id='Jugador', dimensiones=(10, 10))
+    maquina = Tablero(jugador_id='Máquina', dimensiones=(10, 10))
+    jugador.inicializar_barcos()
+    maquina.inicializar_barcos()
+    print("Disparos del Jugador:")
+    jugador.mostrar_tablero()
+    tocado = True
+    victoria = False
+    victoria = False
+    salir = False
+    while victoria==False or salir==False:
+    # Turno del jugador
+        while tocado==True and victoria==False:
+            print("Barcos del Jugador:")
+            jugador.muestra_tablero_con_barcos()
+            print("Tu turno:")
+            coordenadas = func.escribe_coordenadas()
+            tocado = maquina.disparo_coordenada(coordenadas[0],coordenadas[1]) == True #corregir disparos no mostrados
+            print("Disparos del Jugador:")
+            jugador.mostrar_tablero()#disparos del jugador
+            if maquina.verificar_victoria():
+                print("¡Felicidades! ¡Has hundido todos los barcos enemigos! ¡Ganas!")
+                victoria = True
+                break
+
+        tocado=True
+        #maquina.muestra_tablero_con_barcos()
+        while tocado==True and victoria == False:      
+            # Turno de la máquina (simulado como disparo aleatorio)
+            print("Barcos de CPU:")
+            maquina.muestra_tablero_con_barcos()
+            print("\nTurno de la Máquina:")
+            x_maquina = random.randint(0, 9)
+            y_maquina = random.randint(0, 9)
+            tocado = jugador.disparo_coordenada(x_maquina, y_maquina) ==True
+            print("\nDisparos de la Máquina:")
+            maquina.mostrar_tablero()
+            if jugador.verificar_victoria():
+                print("¡La máquina ha hundido todos tus barcos! ¡Has perdido!")
+                victoria = True
+                break
+
+if __name__ == "__main__":
+    main()
