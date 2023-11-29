@@ -71,7 +71,7 @@ class Tablero:
         
     def disparo_coordenada(self, x, y):
         valor_a_devolver=False
-        if self.tablero_oculto[x, y] != 0:
+        if self.tablero_oculto[x, y] > 0:
             print(f'¡Impacto en ({x}, {y})!')
             #seguir disparando
             self.tablero_oculto[x, y] = -10 #tocado
