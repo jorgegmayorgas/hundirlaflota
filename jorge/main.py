@@ -4,6 +4,7 @@ import variables as variables
 import funciones as func
 import numpy as np
 import pandas as pd
+from playsound import playsound
 import random
 
 
@@ -36,9 +37,15 @@ def main():
             print("Tu turno:")
             coordenadas = func.escribe_coordenadas()
             if coordenadas[0] == "salir" and coordenadas[1]=="salir":
+                playsound("./cobarde.mp3")
                 salir=True
                 break
+            playsound('./ataque.mp3')
             tocado = maquina.disparo_coordenada(coordenadas[0],coordenadas[1]) == True #corregir disparos no mostrados
+            if tocado ==False:
+                playsound('./agua.mp3')
+            else:
+                playsound('./hematoma.mp3')
             print("Disparos del Jugador:")
             maquina.mostrar_tablero()#disparos del jugador
             if maquina.verificar_victoria()==True:
