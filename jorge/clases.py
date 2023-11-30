@@ -71,11 +71,15 @@ class Tablero:
         
     def disparo_coordenada(self, x, y):
         valor_a_devolver=False
+        impacto = 0
         if self.tablero_oculto[x, y] > 0:
             print(f'¡Impacto en ({x}, {y})!')
             #seguir disparando
+            impacto = self.tablero_oculto[x, y]
+
             self.tablero_oculto[x, y] = -10 #tocado
             #comprobar hundido
+
             valor_a_devolver=True
         else:
             print(f'Agua en ({x}, {y})')
@@ -88,26 +92,28 @@ class Tablero:
         for fila in range(self.dimensiones[0]):
             for columna in range(self.dimensiones[1]):
                 if self.tablero_visible[fila, columna] == 0:
-                    print("  ", end="")
+                    print(" " * 9, end="")
                 elif self.tablero_visible[fila, columna] != 0:
                     if self.tablero_oculto[fila, columna] == -10:
-                        print(" X ", end="")
+                        print(" " * 4 + "X" + " " * 4, end="")
                     else:
-                        print(" - ", end="")
-                print(" | ", end="")
-            print("\n" + "-" * (self.dimensiones[0] * 5))
+                        print(" "*4 + "-" + " " * 4, end="")
+                print("|", end="")
+            print("\n" + "-" * (self.dimensiones[0]* 10))
     
     def muestra_tablero_con_barcos(self):
         if self.mostrar==True:
-            print(f"Barcos de {self.jugador_id}:")
+            print(f"\tBarcos de {self.jugador_id}:")
             for fila in range(self.dimensiones[0]):
                 for columna in range(self.dimensiones[1]):
                     if self.tablero_oculto[fila, columna] == 0:
-                        print("  ", end="")
+                        print(" " * 9, end="")
                     elif self.tablero_oculto[fila,columna]!=0:
-                        print(f" {int(self.tablero_oculto[fila, columna])} ",end="")
-                    print(" | ", end="")
-                print("\n" + "-" * (self.dimensiones[0] * 5))
+                        longitud = 9 - len(str(int(self.tablero_oculto[fila, columna])))
+                        espacios = int(longitud /2)
+                        print(" " * espacios + str(int(self.tablero_oculto[fila, columna]))+" " * espacios,end="")
+                    print("|", end="")
+                print("\n" + "-" * (self.dimensiones[0]* 10))
 
     def original_muestra_barcos_1(self):
         if self.mostrar==True:

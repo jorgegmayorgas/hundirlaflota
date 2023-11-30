@@ -1,5 +1,6 @@
 from clases import Tablero
 from datetime import datetime
+import variables as variables
 import funciones as func
 import numpy as np
 import pandas as pd
@@ -8,6 +9,7 @@ import random
 
 
 def main():
+    print(variables.pantalla_inicial)
     jugador = Tablero(jugador_id='Jugador', dimensiones=(10, 10))
     maquina = Tablero(jugador_id='Máquina', dimensiones=(10, 10))
     jugador.inicializar_barcos()
@@ -20,8 +22,8 @@ def main():
     dataframe_jugador = pd.DataFrame(jugador.tablero_oculto)
     dataframe_maquina = pd.DataFrame(maquina.tablero_oculto)
     date_time = datetime.now().strftime("%Y%m%d%H%M%S")
-    dataframe_maquina.to_csv(f"./data/{date_time}_maquina.csv",sep=";")
-    dataframe_jugador.to_csv(f"./data/{date_time}_jugador.csv",sep=";")
+    dataframe_maquina.to_csv(f"./{date_time}_maquina.csv",sep=";")
+    dataframe_jugador.to_csv(f"./{date_time}_jugador.csv",sep=";")
     while victoria==False and salir==False:
     # Turno del jugador
         tocado = True
@@ -33,6 +35,9 @@ def main():
             maquina.muestra_tablero_con_barcos()
             print("Tu turno:")
             coordenadas = func.escribe_coordenadas()
+            if coordenadas[0] == "salir" and coordenadas[1]=="salir":
+                salir=True
+                break
             tocado = maquina.disparo_coordenada(coordenadas[0],coordenadas[1]) == True #corregir disparos no mostrados
             print("Disparos del Jugador:")
             maquina.mostrar_tablero()#disparos del jugador
@@ -41,7 +46,8 @@ def main():
                 victoria = True
                 break
 
-        if victoria==True:
+        if victoria==True or salir==True:
+            print("¡Hasta luego!")
             break
         else:
             tocado=True
