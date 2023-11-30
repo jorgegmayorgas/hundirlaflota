@@ -1,5 +1,8 @@
-from tablero import Tablero
+from clases import Tablero
+from datetime import datetime
 import funciones as func
+import numpy as np
+import pandas as pd
 import random
 
 
@@ -14,7 +17,12 @@ def main():
     salir = False
     tocado = True
     victoria = False
-    while victoria==False or salir==False:
+    dataframe_jugador = pd.DataFrame(jugador.tablero_oculto)
+    dataframe_maquina = pd.DataFrame(maquina.tablero_oculto)
+    date_time = datetime.now().strftime("%Y%m%d%H%M%S")
+    dataframe_maquina.to_csv(f"./data/{date_time}_maquina.csv",sep=";")
+    dataframe_jugador.to_csv(f"./data/{date_time}_jugador.csv",sep=";")
+    while victoria==False and salir==False:
     # Turno del jugador
         tocado = True
         victoria = False
@@ -34,7 +42,9 @@ def main():
                 break
 
         if victoria==True:
-            tocado = False
+            break
+        else:
+            tocado=True
         if victoria == False:
             victoria = False
         
