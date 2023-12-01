@@ -9,5 +9,22 @@ def escribe_coordenadas():
     elif x.lower()=="salir" or y.lower()=="salir":
         return ["salir","salir"]
     else:
-        print("Entrada inválida. Introduce un número válido o salir.")
+        print("Entrada inválida. Introduce un número de 0 a 9 o salir.")
 
+def turno_jugador():
+    print()
+    print("             ~~~~~~~~~~~~~~~~")
+    print("             |              |")
+    print("             |   TU TURNO   |")
+    print("             |              |")
+    print("             ~~~~~~~~~~~~~~~~")
+    print()
+
+def turno_maquina():
+    print()
+    print("             ~~~~~~~~~~~~~~~~")
+    print("             |     TURNO    |")
+    print("             |     DE LA    |")
+    print("             |    MÁQUINA   |")
+    print("             ~~~~~~~~~~~~~~~~")
+    print()

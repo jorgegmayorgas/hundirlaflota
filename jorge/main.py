@@ -34,18 +34,22 @@ def main():
             jugador.muestra_tablero_con_barcos()
             print("Barcos CPU:")
             maquina.muestra_tablero_con_barcos()
-            print("Tu turno:")
+            func.turno_jugador()
             coordenadas = func.escribe_coordenadas()
             if coordenadas[0] == "salir" and coordenadas[1]=="salir":
-                playsound("./cobarde.mp3")
+                if variables.sonidos==True:
+                    playsound("./cobarde.mp3")
                 salir=True
                 break
-            playsound('./ataque.mp3')
+            if variables.sonidos==True:
+                playsound('./ataque.mp3')
             tocado = maquina.disparo_coordenada(coordenadas[0],coordenadas[1]) == True #corregir disparos no mostrados
             if tocado ==False:
-                playsound('./agua.mp3')
+                if variables.sonidos==True:
+                    playsound('./agua.mp3')
             else:
-                playsound('./hematoma.mp3')
+                if variables.sonidos==True:
+                    playsound('./hematoma.mp3')
             print("Disparos del Jugador:")
             maquina.mostrar_tablero()#disparos del jugador
             if maquina.verificar_victoria()==True:
@@ -64,10 +68,10 @@ def main():
         #maquina.muestra_tablero_con_barcos()
         while tocado == True and victoria == False:      
             # Turno de la máquina (simulado como disparo aleatorio)
+            func.turno_maquina()
             #victoria=True
             print("Barcos de CPU:")
             maquina.muestra_tablero_con_barcos()
-            print("\nTurno de la Máquina:")
             x_maquina = random.randint(0, 9)
             y_maquina = random.randint(0, 9)
             tocado = jugador.disparo_coordenada(x_maquina, y_maquina) == True

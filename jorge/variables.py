@@ -2,7 +2,7 @@
 
 # Dimensiones del tablero
 DIMENSIONES_TABLERO = (10, 10)
-
+sonidos = True
 # Diccionario de barcos con sus esloras
 BARCOS = {
     "Barco1": 4,

@@ -1,6 +1,7 @@
 import numpy as np
+import time
 import random
-#mostrar = True
+
 class Tablero:
     def __init__(self, jugador_id, dimensiones):
         self.jugador_id = jugador_id
@@ -70,6 +71,40 @@ class Tablero:
             self.genera_barco(eslora)
         
     def disparo_coordenada(self, x, y):
+        valor_a_devolver=False
+        impacto = 0
+        print(f'Has escogido disparar en ({x}, {y})')
+        time.sleep(1)
+        print(f'¿Habrás acertado', end="", flush=True)
+        time.sleep(1)
+        print(".", end="", flush=True)
+        time.sleep(1)
+        print(".", end="", flush=True)
+        time.sleep(1)
+        print(".", end="", flush=True)
+        time.sleep(1)
+        print("?", flush=True)
+        if self.tablero_oculto[x, y] > 0:
+            time.sleep(2)
+            print("\n\t¡¡Bien hecho, tocado!!\n\n")
+            time.sleep(1)
+            print("\n¡Sigue lanzando!\n\n")
+            #seguir disparando
+            impacto = self.tablero_oculto[x, y]
+            self.tablero_oculto[x, y] = -10 #tocado
+#comprobar hundido
+#busca todos los barcos con impacto
+#el valor indicará si está tocado o hundido
+            valor_a_devolver=True
+        else:
+            time.sleep(2)
+            print("\n\t¡¡Nooo.. Agua, a ver si hay suerte en la siguiente tirada\n\n")
+            self.tablero_oculto[x, y] = -5 # agua
+            valor_a_devolver=False
+        self.tablero_visible[x, y] = self.tablero_oculto[x, y]
+        return valor_a_devolver
+    
+    def disparo_coordenada_original(self, x, y):
         valor_a_devolver=False
         impacto = 0
         if self.tablero_oculto[x, y] > 0:
@@ -150,3 +185,34 @@ class Tablero:
             return True
         else:
             return False
+    def disparo_coordenada_2(self, x, y):
+        if self.tablero_oculto[x, y] == 1:
+            print(f'Has escogido disparar en ({x}, {y})')
+            time.sleep(1)
+            print(f'Habrás acertado', end="", flush=True)
+            time.sleep(1)
+            print(".", end="", flush=True)
+            time.sleep(1)
+            print(".", end="", flush=True)
+            time.sleep(1)
+            print(".", end="", flush=True)
+            time.sleep(1)
+            print("?", flush=True)
+            time.sleep(2)
+            print("\n\t¡¡Bien hecho, tocado!!\n\n")
+            time.sleep(1)
+            print("\n¡Sigue lanzando!\n\n")
+        else:
+            print(f'Has escogido disparar en ({x}, {y})')
+            time.sleep(1)
+            print(f'¿Habrás acertado', end="", flush=True)
+            time.sleep(1)
+            print(".", end="", flush=True)
+            time.sleep(1)
+            print(".", end="", flush=True)
+            time.sleep(1)
+            print(".", end="", flush=True)
+            time.sleep(1)
+            print("?", flush=True)
+            time.sleep(2)
+            print("\n\t¡¡Nooo.. Agua, a ver si hay suerte en la siguiente tirada\n\n")
