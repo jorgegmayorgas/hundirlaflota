@@ -3,16 +3,23 @@ from datetime import datetime
 import variables as variables
 import funciones as func
 import numpy as np
+#import os
 import pandas as pd
-from playsound import playsound
+import playsound
 import random
 
 
 
 def main():
+    #ruta_completa = os.getcwd() + "\\"
+    #ruta_completa = ruta_completa.replace("\\","/")
+    ruta_completa = ""
+    ruta_completa = "./audio/"
+    print(ruta_completa)
+    print(ruta_completa)
     print(variables.pantalla_inicial)
-    jugador = Tablero(jugador_id='Jugador', dimensiones=(10, 10))
-    maquina = Tablero(jugador_id='Máquina', dimensiones=(10, 10))
+    jugador = Tablero(jugador_id='Jugador', dimensiones=variables.DIMENSIONES_TABLERO)
+    maquina = Tablero(jugador_id='Máquina', dimensiones=variables.DIMENSIONES_TABLERO)
     jugador.inicializar_barcos()
     maquina.inicializar_barcos()
     print("Disparos del Jugador:")
@@ -38,18 +45,22 @@ def main():
             coordenadas = func.escribe_coordenadas()
             if coordenadas[0] == "salir" and coordenadas[1]=="salir":
                 if variables.sonidos==True:
-                    playsound("./cobarde.mp3")
+                    fichero = ruta_completa + "cobarde.mp3"
+                    playsound.playsound(fichero)
                 salir=True
                 break
             if variables.sonidos==True:
-                playsound('./ataque.mp3')
+                fichero = ruta_completa + "ataque.mp3"
+                playsound.playsound(fichero)
             tocado = maquina.disparo_coordenada(coordenadas[0],coordenadas[1]) == True #corregir disparos no mostrados
             if tocado ==False:
                 if variables.sonidos==True:
-                    playsound('./agua.mp3')
+                    fichero = ruta_completa + "agua.mp3"
+                    playsound.playsound(fichero)
             else:
                 if variables.sonidos==True:
-                    playsound('./hematoma.mp3')
+                    fichero = ruta_completa + "hematoma.mp3"
+                    playsound.playsound(fichero)
             print("Disparos del Jugador:")
             maquina.mostrar_tablero()#disparos del jugador
             if maquina.verificar_victoria()==True:
