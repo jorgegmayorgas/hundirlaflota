@@ -1,35 +1,30 @@
-def hola():
-    print("Hola")
 
-def disparo(valor,tablero):
-    if valor.upper() == "O":
-        valor = "X"
-        #print(valor)
-        print("Acierto") #definir tocado hundido
-        return valor
+def escribe_coordenadas():
+    
+    valores_ascii=list([48,49,50,51,52,53,54,55,56,57])
+    x = input("Introduce la coordenada X (0-9): ")
+    y = input("Introduce la coordenada Y (0-9): ")
+    if len(x)==1 and ord(x) in valores_ascii and len(y)==1 and ord(y) in valores_ascii:
+        return [int(x),int(y)]
+    elif x.lower()=="salir" or y.lower()=="salir":
+        return ["salir","salir"]
     else:
-        print("Agua")
-        valor = "-"
-        return valor
+        print("Entrada inválida. Introduce un número de 0 a 9 o salir.")
 
-def tocado_hundido(tablero):
-    mensaje=""
-    for indice,elemento in enumerate(tablero):
-        pass        
-    return mensaje
+def turno_jugador():
+    print()
+    print("             ~~~~~~~~~~~~~~~~")
+    print("             |              |")
+    print("             |   TU TURNO   |")
+    print("             |              |")
+    print("             ~~~~~~~~~~~~~~~~")
+    print()
 
-def barco(tablero,tamanyo):
-    fila_inicial = 0
-    columna_inicial = 0
-    tupla_limite_superior = tablero.shape
-    limite_ejex = tupla_limite_superior[0]
-    limite_ejey = tupla_limite_superior[1]
-    #print(limite_ejex,limite_ejey)
-    ejex = rd.randrange(limite_ejex-1)
-    ejey = rd.randrange(limite_ejey-1)
-    print(ejex,":",ejey)
-
-def impacto (self,coordenada_x=0, coordenada_y=0,posiciones):
-        self.coordenada_x = coordenada_x
-        self.coordenada_y = coordenada_y
-        self.posiciones = posiciones
+def turno_maquina():
+    print()
+    print("             ~~~~~~~~~~~~~~~~")
+    print("             |     TURNO    |")
+    print("             |     DE LA    |")
+    print("             |    MÁQUINA   |")
+    print("             ~~~~~~~~~~~~~~~~")
+    print()
