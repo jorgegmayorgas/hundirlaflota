@@ -224,14 +224,14 @@ def get_features_cat_regression(df:pd.DataFrame,target_col:str="", pvalue=0.05):
         print("Error: Si 'pvalue' no es 'None', debe tener un valor entre (0, 1).")
         return None
     #realizar test de relación de confianza
-    print("Test de correlación")
+    #print("Test de correlación")
     df_categoricas=df.drop(target_col,axis=1)
     
     for columna in df_categoricas.columns:
         if not np.issubdtype(df[columna].dtype, np.number):
             if not np.issubdtype(df[columna].dtype, np.datetime64):
                 lista_de_categoricas.append(columna)
-            print("lista_de_categoricas:",lista_de_categoricas)
+            #print("lista_de_categoricas:",lista_de_categoricas)
 
     #score=0
     #score_ttest_ind=ttest_ind()
@@ -257,7 +257,7 @@ def get_features_cat_regression(df:pd.DataFrame,target_col:str="", pvalue=0.05):
             if valor != unique_values[len(unique_values)-1]:
                 parametros=parametros + ","
         
-        print("parametros:",parametros)
+        #print("parametros:",parametros)
 
         # Create a dictionary to store variable values
         variables = {}
@@ -268,7 +268,7 @@ def get_features_cat_regression(df:pd.DataFrame,target_col:str="", pvalue=0.05):
         else:
             variables = {}
             sentencia=f"chi2_stat, p_value, dof, expected = chi2_contingency(pd.crosstab(df['{columna}'], df['{target_col}']))"
-            print("sentencia:",sentencia)
+            #print("sentencia:",sentencia)
             exec(sentencia, globals(), variables)
             if variables['p_value']>pvalue:
                 selected_columns.append(columna)
@@ -277,9 +277,7 @@ def get_features_cat_regression(df:pd.DataFrame,target_col:str="", pvalue=0.05):
             return None      
         else:
             return selected_columns
-
-
-def plot_features_cat_regression(df:pd.DataFrame,target_col:str="", columns:list=[],pvalue=0.05,with_indivual_plot=False):
+def plot_features_cat_regression(df:pd.DataFrame,target_col:str="", columns:list=[],pvalue=0.05,with_individual_plot:bool=False):
     """
     Función que pintará los histogramas agrupados de la variable "target_col"
     para cada uno de los valores de las variables categóricas incluidas en 
@@ -318,13 +316,15 @@ def plot_features_cat_regression(df:pd.DataFrame,target_col:str="", columns:list
     if pvalue is not None and (not isinstance(pvalue, (float, int)) or pvalue <= 0 or pvalue >= 1):
         print("Error: Si 'pvalue' no es 'None', debe tener un valor entre (0, 1).")
         return None
+    #print("Entro")
     columnas_cat = []
     for col in columns:
         tabla = pd.crosstab(df[col], df[target_col])
-        chi2, _, _, _ = chi2_contingency(tabla)
-        if chi2_contingency(tabla)[1] < pvalue:
+        chi2, p_value_col, _, _ = chi2_contingency(tabla)
+        #print("chi2_contingency(tabla)[1] < pvalue",chi2_contingency(tabla)[1])
+        #if chi2_contingency(tabla)[1] > pvalue:
+        if p_value_col  > pvalue:
             columnas_cat.append(col)
-
             if with_individual_plot:
                 for col in columnas_cat:    
                     plt.figure(figsize=(10, 8))
