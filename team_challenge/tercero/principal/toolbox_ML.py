@@ -1,6 +1,9 @@
+import numpy as np
 import pandas as pd
 from scipy.stats import pearsonr
 import ast
+import matplotlib.pyplot as plt 
+import seaborn as sns
 from scipy.stats import ttest_ind
 from scipy.stats import ttest_rel
 from scipy.stats import ttest_1samp
@@ -114,7 +117,8 @@ def get_features_num_regression(df:pd.DataFrame, target_col:str, umbral_corr:flo
     # Filtramos las columnas basadas en 'umbral_corr' y 'pvalue'
     features_seleccionadas = []
     for col, corr, p_value in correlaciones:
-        if abs(corr) > umbral_corr and (pvalue is None or p_value < 1 - pvalue):
+        #if abs(corr) > umbral_corr and (pvalue is None or p_value < 1 - pvalue):#corregir
+        if abs(corr) > umbral_corr and (pvalue is None or p_value < pvalue):#corregido
             features_seleccionadas.append((col, corr, p_value))
 
     # Devolvemos la lista de características seleccionadas junto con sus correlaciones y valores p
@@ -176,7 +180,7 @@ def plot_features_num_regression(df:pd.DataFrame,target_col="", columns=list("")
     for col in columns:
         if target_col:
             corr, p_value = pearsonr(df[col], df[target_col])
-            if abs(corr) > umbral_corr and (pvalue is None or p_value < 1 - pvalue):
+            if abs(corr) > umbral_corr and (pvalue is None or p_value < pvalue):#corregido
                 selected_columns.append(col)
     
     # Si no hay columnas seleccionadas, mostramos un mensaje y devolvemos None
@@ -233,20 +237,7 @@ def get_features_cat_regression(df:pd.DataFrame,target_col:str="", pvalue=0.05):
                 lista_de_categoricas.append(columna)
             #print("lista_de_categoricas:",lista_de_categoricas)
 
-    #score=0
-    #score_ttest_ind=ttest_ind()
-    #score_ttest_rel=ttest_rel()
-    #score_ttest_1samp=ttest_1samp()
-    #score_chi2_contingency=chi2_contingency()
-    #df_unique_values = pd.DataFrame(columns=lista_de_categoricas)
-    #for columna in lista_de_categoricas:
-    #for valor in lista_de_categoricas:
-    #       df_unique_values[valor] = df_categoricas.groupby(valor)[valor].size()
-    #df_unique_values = df_categoricas[lista_de_categoricas].copy()
-    #df_unique_values = df_unique_values.drop_duplicates(inplace=True)
-    #   df_unique_values[columna]=df_categoricas[columna].drop_duplicates()
-    #print(df_unique_values)
-    #dictionary_values= dict()
+    
     statistic_test=list()
     selected_columns = []
     for columna in lista_de_categoricas:#averiguo los valores únicos
@@ -262,15 +253,16 @@ def get_features_cat_regression(df:pd.DataFrame,target_col:str="", pvalue=0.05):
         # Create a dictionary to store variable values
         variables = {}
         # Execute the dynamic code and capture variables in the dictionary
-        exec(f"t_statistic,p_value = f_oneway({parametros})", globals(), variables)
-        if variables['p_value']>pvalue:
+       #exec(f"t_statistic,p_value = f_oneway({parametros})", globals(), variables) #este si
+        exec(f"t_statistic,p_value = f_oneway({parametros})",globals(),locals(),variables) #este si
+        if variables['p_value']<pvalue:#corregido
             selected_columns.append(columna)
         else:
             variables = {}
-            sentencia=f"chi2_stat, p_value, dof, expected = chi2_contingency(pd.crosstab(df['{columna}'], df['{target_col}']))"
+            sentencia=f"chi2_stat, p_value, dof, expected = chi2_contingency(pd.crosstab(df['{columna}'], df['{target_col}']))"#no es lo correcto u-mann whitney
             #print("sentencia:",sentencia)
             exec(sentencia, globals(), variables)
-            if variables['p_value']>pvalue:
+            if variables['p_value']<pvalue:#corregido
                 selected_columns.append(columna)
         if not selected_columns:
             print("No hay columnas que cumplan con los criterios de selección.")
@@ -284,7 +276,7 @@ def plot_features_cat_regression(df:pd.DataFrame,target_col:str="", columns:list
     Función que pintará los histogramas agrupados de la variable "target_col"
     para cada uno de los valores de las variables categóricas incluidas en 
     columns que cumplan que su test de relación con "target_col" es 
-    significatio para el nivel 1-pvalue de significación estadística. 
+    significativo para el nivel 1-pvalue de significación estadística. 
     La función devolverá los valores de "columns" que cumplan con las 
     condiciones anteriores. 
     
@@ -305,6 +297,7 @@ def plot_features_cat_regression(df:pd.DataFrame,target_col:str="", columns:list
     sns.pairplot: Pairplot
     """
     # Verificamos si existe algún error al llamar a la columna 'target_col'
+    
     if target_col not in df.columns:
         print(f"Error: La columna '{target_col}' no está bien indicada, no se puede asignar como 'target_col'.")
         return None
@@ -325,7 +318,7 @@ def plot_features_cat_regression(df:pd.DataFrame,target_col:str="", columns:list
         chi2, p_value_col, _, _ = chi2_contingency(tabla)
         #print("chi2_contingency(tabla)[1] < pvalue",chi2_contingency(tabla)[1])
         #if chi2_contingency(tabla)[1] > pvalue:
-        if p_value_col  > pvalue:
+        if p_value_col < pvalue:#corregido
             columnas_cat.append(col)
             if with_individual_plot:
                 for col in columnas_cat:    
