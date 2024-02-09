@@ -45,7 +45,6 @@ def describe_df(df:pd.DataFrame):
     return descripcion.T
     
 
-
 def get_features_num_regression(df:pd.DataFrame, target_col:str, umbral_corr:float, pvalue=None):
     """
     Función que devuelve una lista con las columnas numéricas 
@@ -120,6 +119,7 @@ def get_features_num_regression(df:pd.DataFrame, target_col:str, umbral_corr:flo
 
     # Devolvemos la lista de características seleccionadas junto con sus correlaciones y valores p
     return features_seleccionadas
+
 
 def plot_features_num_regression(df:pd.DataFrame,target_col="", columns=list(""), umbral_corr=0.0,pvalue=None):
     """
@@ -277,6 +277,8 @@ def get_features_cat_regression(df:pd.DataFrame,target_col:str="", pvalue=0.05):
             return None      
         else:
             return selected_columns
+
+
 def plot_features_cat_regression(df:pd.DataFrame,target_col:str="", columns:list=[],pvalue=0.05,with_individual_plot:bool=False):
     """
     Función que pintará los histogramas agrupados de la variable "target_col"
