@@ -4,12 +4,9 @@ from scipy.stats import pearsonr
 import ast
 import matplotlib.pyplot as plt 
 import seaborn as sns
-from scipy.stats import ttest_ind
-from scipy.stats import ttest_rel
-from scipy.stats import ttest_1samp
-from scipy.stats import chi2_contingency
-from scipy.stats import f_oneway
-#esta la hace Jorge
+from scipy.stats import ttest_ind,mannwhitneyu,ttest_rel,ttest_1samp
+from scipy.stats import chi2_contingency,f_oneway
+
 def describe_df(df:pd.DataFrame):
     """
     Función que devuelve un Dataframe  de Pandas con:
@@ -238,37 +235,42 @@ def get_features_cat_regression(df:pd.DataFrame,target_col:str="", pvalue=0.05):
             #print("lista_de_categoricas:",lista_de_categoricas)
 
     
-    statistic_test=list()
     selected_columns = []
+    
     for columna in lista_de_categoricas:#averiguo los valores únicos
         unique_values=df[columna].unique()
         parametros="" # para formar la llamada dinámicamente a t-test y chi cuadrado
         for valor in unique_values:
-            parametros=parametros + f'df["{target_col}"][df["{columna}"]=="{valor}"]'
-            if valor != unique_values[len(unique_values)-1]:
-                parametros=parametros + ","
+            #parametros=parametros + f'df["{target_col}"][df["{columna}"]=="{valor}"]'
+            #if valor != unique_values[len(unique_values)-1]:
+            #    parametros=parametros + ","
         
         #print("parametros:",parametros)
 
         # Create a dictionary to store variable values
-        variables = {}
+        #variables = {}
         # Execute the dynamic code and capture variables in the dictionary
-       #exec(f"t_statistic,p_value = f_oneway({parametros})", globals(), variables) #este si
-        exec(f"t_statistic,p_value = f_oneway({parametros})",globals(),locals(),variables) #este si
-        if variables['p_value']<pvalue:#corregido
-            selected_columns.append(columna)
-        else:
-            variables = {}
-            sentencia=f"chi2_stat, p_value, dof, expected = chi2_contingency(pd.crosstab(df['{columna}'], df['{target_col}']))"#no es lo correcto u-mann whitney
-            #print("sentencia:",sentencia)
-            exec(sentencia, globals(), variables)
-            if variables['p_value']<pvalue:#corregido
-                selected_columns.append(columna)
-        if not selected_columns:
-            print("No hay columnas que cumplan con los criterios de selección.")
-            return None      
-        else:
-            return selected_columns
+        #exec(f"t_statistic,p_value = f_oneway({parametros})", globals(), variables) #este si
+        #exec(instructions,{},variables) #este si
+            t_statistic,p_value = f_oneway(df[target_col][df[columna]==valor],df[target_col])
+            if p_value<pvalue:#corregido
+                if columna not in selected_columns:
+                    selected_columns.append(columna)
+            else:
+                #sentencia=f"chi2_stat, p_value, dof, expected = chi2_contingency(pd.crosstab(df['{columna}'], 
+                # df['{target_col}']))"#no es lo correcto u-mann whitney
+                #print("sentencia:",sentencia)
+                #exec(sentencia, globals(), variables)
+                stat, p_value = mannwhitneyu(df[target_col][df[columna]==valor],df[target_col])
+                if p_value<pvalue:#corregido
+                    if columna not in selected_columns:
+                        selected_columns.append(columna)
+    
+    if not selected_columns:
+        print("No hay columnas que cumplan con los criterios de selección.")
+        return None      
+    else:
+        return selected_columns
 
 
 def plot_features_cat_regression(df:pd.DataFrame,target_col:str="", columns:list=[],pvalue=0.05,with_individual_plot:bool=False):
